@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love Letter</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            background-color: #ffe6e6;
+            position: relative;
+            padding: 20px;
+        }
+
+        #openLetterBtn {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: #ff4d4d;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #openLetterBtn:hover {
+            background-color: #e60000;
+        }
+
+        #letter {
+            display: none; /* Keep it hidden initially */
+            background-color: white;
+            border-radius: 10px;
+            width: 90%; /* 90% width for mobile */
+            max-width: 400px; /* Limit max width for mobile */
+            padding: 15px; /* Reduced padding */
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: left;
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.5s ease; /* Fade transition */
+        }
+
+        #letter h2 {
+            color: #ff6666;
+            font-size: 22px; /* Reduced font size */
+            text-align: center;
+        }
+
+        #letter p {
+            font-size: 14px; /* Reduced font size */
+            color: #333;
+            line-height: 1.4; /* Adjust line height for mobile */
+        }
+
+        #letter .close-btn {
+            margin-top: 20px;
+            padding: 8px 15px; /* Reduced padding */
+            background-color: #ff6666;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px; /* Reduced font size */
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 20px auto 0;
+        }
+
+        #letter .close-btn:hover {
+            background-color: #ff1a1a;
+        }
+        /* Hearts animation */
+        .heart {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            height: 30px;
+            background-color: #ff4d4d;
+            transform: rotate(-45deg);
+            animation: float 4s infinite ease-in-out;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #ff4d4d;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 15px;
+            top: 0;
+        }
+
+        @keyframes float {
+            0% {
+                bottom: 0;
+                opacity: 1;
+            }
+            100% {
+                bottom: 100vh;
+                opacity: 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <button id="openLetterBtn">Open Love Letter 💌</button>
+    </div>
+
+    <div id="letter">
+        <h2>My Love,</h2>
+        <p>
+            I just wanted to take a moment to let you know how much you mean to me.
+            For every day that has passed in the past three years, my love for you just keeps deepening and getting even stronger. 
+            Your smile, and simply the presence that you give me makes my world shine brighter than anyone else could.
+        </p>
+        <p>
+            From the moment we met, I knew you are the one. I feel blessed to have you in my life.
+            Thank you for being by my side, supporting, and loving me unconditionally.
+        </p>
+        <p>
+            I look forward to every second I get to spend with you, and I can’t wait for all the adventures we will share together in the future.
+            You are my everything, ma'am.
+        </p>
+        <p>With all my heart, ILOVEYOU PO.</p>
+        
+        <p><strong>Nathalie<3</strong></p>
+        <button class="close-btn" onclick="closeLetter()">Close Letter</button>
+    </div>
+
+    <!-- Audio for background music -->
+    <audio id="backgroundMusic" loop>
+        <source src="PALAGITjKz.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        const openLetterBtn = document.getElementById('openLetterBtn');
+        const letter = document.getElementById('letter');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+
+        // Create heart element
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = `${Math.random() * 100}vw`;
+            document.body.appendChild(heart);
+
+            // Remove the heart after animation ends
+            setTimeout(() => {
+                heart.remove();
+            }, 4000); // 4 seconds (matches the animation duration)
+        }
+
+        // Trigger heart floating animation every 300ms
+        function startHearts() {
+            setInterval(createHeart, 300);
+        }
+
+        // Open the letter, start hearts animation, and play music
+        openLetterBtn.addEventListener('click', function() {
+            letter.style.display = 'block'; // Make letter block
+            setTimeout(() => {
+                letter.style.opacity = '1'; // Fade in effect
+            }, 10); // Short delay to ensure display is set
+            openLetterBtn.style.display = 'none'; // Hide button
+            startHearts(); // Start floating hearts animation
+            backgroundMusic.play(); // Play the background music
+        });
+
+        // Close the letter and pause the music
+        function closeLetter() {
+            letter.style.opacity = '0'; // Fade out effect
+            setTimeout(() => {
+                letter.style.display = 'none'; // Hide letter after fade out
+                openLetterBtn.style.display = 'block'; // Show button again
+            }, 500); // Delay to match fade out duration
+            backgroundMusic.pause(); // Stop the background music
+        }
+    </script>
+
+</body>
+</html>
